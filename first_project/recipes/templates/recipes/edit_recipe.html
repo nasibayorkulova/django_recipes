@@ -1,0 +1,26 @@
+{% extends 'recipes/base.html' %}
+
+
+{% block content %}
+
+<div class="container">
+    <h1 class="text-center"><a href="{% url 'home' %}">{{ title }}</a></h1>
+    <div class="row justify-content-center pt-5 pb-5">
+        <div class="col-md-8">
+            <div class="card height-50 text-center">
+                {% if recipe %}
+                    <img src="{{ recipe.photo.url }}" class="card-img-top" alt="...">
+                {% endif %}
+                <div class="card-body">
+                    <form action="" method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        {{ form.as_p }}
+                        <button type="submit" class="btn btn-{{ btn_color }}">{{ btn_text }}</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}

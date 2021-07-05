@@ -1,0 +1,39 @@
+{% extends 'recipes/base.html' %}
+
+{% block content %}
+<div class="container">
+    <h1 class="text-center mb-3"><a href="{% url 'home' %}">Рецепты</a></h1>
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card height-50 text-center">
+                <div class="card-body">
+                    <h3 class="card-title">Профиль пользователя:  {{ user.username }}</h3>
+                    <div>Имя:  {{ user.first_name }}</div>
+                    <div>Фамилия:  {{ user.last_name }}</div>
+                    <div>Email:  {{ user.email }}</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row justify-content-around">
+        {% for recipe in recipes %}
+
+        <div class="card height-50" style="width: 18rem;">
+            <img src="{{ recipe.photo.url }}" class="card-img-top" alt="...">
+            <div class="card-body">
+                <h5 class="card-title">{{ recipe.title }}</h5>
+                <h6 class="card-title"><a href="{{ recipe.category.get_absolute_url }}">{{ recipe.category.title }}</a>
+                </h6>
+                <p class="card-text">{{ recipe.description|truncatechars:100 }}</p>
+                <a href="{{ recipe.get_absolute_url }}" class="btn btn-primary">Подробнее</a>
+                {% if user.is_superuser %}
+                    <a href="{% url 'edit_recipe' pk=recipe.pk %}" class="btn btn-success">Изменить</a>
+                {% endif %}
+            </div>
+        </div>
+
+        {% endfor %}
+</div>
+{% endblock content %}
